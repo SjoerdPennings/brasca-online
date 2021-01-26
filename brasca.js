@@ -1,4 +1,5 @@
 document.getElementById('button').addEventListener("click", function() {
+    
     var stack = [];
     var reg_a = 0;
     var reg_b = 0;
@@ -20,7 +21,7 @@ document.getElementById('button').addEventListener("click", function() {
     //Populate the while loop object
     var temp = []
     for (let i = 0; i < code.length; i++) {
-        let j = code.codePointAt(i);
+        let j = code[i];
         if (j == "[") {
             temp.push(i);
         }
@@ -30,6 +31,27 @@ document.getElementById('button').addEventListener("click", function() {
             while_loops[i] = start;
         }
     }
+    
+    function popstack() {
+        if (stack.length > 0) {
+            return stack.pop();
+        }
+        else {
+            return 0;
+        }
+        
+    }
+
+    function shiftstack() {
+        if (stack.length > 0) {
+            return stack.shift();
+        }
+        else {
+            return 0;
+        }
+    }
+
+
 
     document.getElementById('stdout').value = "";
     while (code_pointer < code.length) {
@@ -107,67 +129,67 @@ document.getElementById('button').addEventListener("click", function() {
 
                 //Math
                 else if (command == "+") {
-                    let a = stack.pop();
-                    let b = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
                     stack.push(b+a);
                 }
                 else if (command == "-") {
-                    let a = stack.pop();
-                    let b = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
                     stack.push(b-a);
                 }
                 else if (command == "*") {
-                    let a = stack.pop();
-                    let b = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
                     stack.push(b*a);
                 }
                 else if (command == "/") {
-                    let a = stack.pop();
-                    let b = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
                     stack.push(Math.floor(b/a));
                 }
                 else if (command == "%") {
-                    let a = stack.pop();
-                    let b = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
                     stack.push(b%a);
                 }
                 else if (command == "^") {
-                    let a = stack.pop();
-                    let b = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
                     stack.push(Math.pow(b,a));
                 }
                 else if (command == "s") {
-                    let a = stack.pop();
+                    let a = popstack();
                     stack.push(Math.floor(Math.sqrt(a)));
                 }
 
                 //Bitwise
                 else if (command == "~") {
-                    let a = stack.pop();
+                    let a = popstack();
                     stack.push(~a);
                 }
                 else if (command == "&") {
-                    let a = stack.pop();
-                    let b = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
                     stack.push(b&a);
                 }
                 else if (command == "|") {
-                    let a = stack.pop();
-                    let b = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
                     stack.push(b|a);
                 }
                 else if (command == "_") {
-                    let a = stack.pop();
-                    let b = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
                     stack.push(b^a);
                 }
 
                 //Stack
                 else if (command == "a") {
-                    reg_a = stack.pop();
+                    reg_a = popstack();
                 }
                 else if (command == "b") {
-                    reg_b = stack.pop();
+                    reg_b = popstack();
                 }
                 else if (command == "A") {
                     stack.push(reg_a);
@@ -181,34 +203,34 @@ document.getElementById('button').addEventListener("click", function() {
                     stack.reverse();
                 }
                 else if (command == ":") {
-                    let a = stack.pop();
+                    let a = popstack();
                     stack.push(a);
                     stack.push(a);
                 }
                 else if (command == ";") {
-                    let a = stack.shift();
+                    let a = shiftstack();
                     stack.unshift(a);
                     stack.unshift(a);
                 }
                 else if (command == "m") {
-                    let a = stack.pop();
+                    let a = popstack();
                     stack.unshift(a);
                 }
                 else if (command == "M") {
-                    let a = stack.shift();
+                    let a = shiftstack();
                     stack.push(a);
                 }
                 else if (command == "p") {
-                    let amount = stack.pop();
+                    let amount = popstack();
                     for (const x of Array(amount).keys()) {
-                        let val = stack.pop();
+                        let val = popstack();
                         stack.unshift(val);
                     }
                 }
                 else if (command == "P") {
-                    let amount = stack.pop();
+                    let amount = popstack();
                     for (const x of Array(amount).keys()) {
-                        let val = stack.shift();
+                        let val = shiftstack();
                         stack.push(val);
                     }
                 }
@@ -219,29 +241,29 @@ document.getElementById('button').addEventListener("click", function() {
                     stack.push(stack.length);
                 }
                 else if (command == "$") {
-                    let a = stack.pop();
-                    let b = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
                     stack.push(a);
                     stack.push(b);
                 }
                 else if (command == "R") {
-                    let a = stack.pop();
-                    let b = stack.pop();
-                    let c = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
+                    let c = popstack();
                     stack.push(a);
                     stack.push(c);
                     stack.push(b);
                 }
                 else if (command == "S") {
-                    let a = stack.pop();
-                    let b = stack.pop();
+                    let a = popstack();
+                    let b = popstack();
                     stack.push("" + b + a);
                 }
                 else if (command == "g") {
                     let temp = stack.join('');
                     let amount = stack.length;
                     for (const x of Array(amount).keys()) {
-                        stack.pop();
+                        popstack();
                     }
                     stack.push(temp);
                 }
@@ -262,10 +284,10 @@ document.getElementById('button').addEventListener("click", function() {
                     }
                 }
                 else if (command == "x") {
-                    stack.pop();
+                    popstack();
                 }
                 else if (command == "X") {
-                    stack.shift();
+                    shiftstack();
                 }
 
                 //I/O
@@ -273,29 +295,81 @@ document.getElementById('button').addEventListener("click", function() {
                     if (already_printed == false) {
                         already_printed = true;
                     }
-                    document.getElementById('stdout').value += String.fromCodePoint(stack.pop());
+                    document.getElementById('stdout').value += String.fromCodePoint(popstack());
                 }
                 else if (command == "O") {
                     if (already_printed == false) {
                         already_printed = true;
                     }
-                    document.getElementById('stdout').value += String.fromCodePoint(stack.shift());
+                    document.getElementById('stdout').value += String.fromCodePoint(shiftstack());
                 }
                 else if (command == "n") {
                     if (already_printed == false) {
                         already_printed = true;
                     }
-                    document.getElementById('stdout').value += stack.pop();
+                    document.getElementById('stdout').value += popstack();
                 }
                 else if (command == "N") {
                     if (already_printed == false) {
                         already_printed = true;
                     }
-                    document.getElementById('stdout').value += stack.shift();
+                    document.getElementById('stdout').value += shiftstack();
                 }
 
-
-
+                //Control Flow
+                else if (command == "<") {
+                    let a = popstack();
+                    let b = popstack();
+                    if (b<a) {
+                        stack.push(1);
+                    }
+                    else {
+                        stack.push(0);
+                    }
+                }
+                else if (command == ">") {
+                    let a = popstack();
+                    let b = popstack();
+                    if (b>a) {
+                        stack.push(1);
+                    }
+                    else {
+                        stack.push(0);
+                    }
+                }
+                else if (command == "=") {
+                    let a = popstack();
+                    let b = popstack();
+                    if (b==a) {
+                        stack.push(1);
+                    }
+                    else {
+                        stack.push(0);
+                    }
+                }
+                else if (command == "@") {
+                    already_printed = true;
+                    break;
+                }
+                else if (command == "#") {
+                    if (popstack() <= 0) {
+                        code_pointer++;
+                    }
+                }
+                else if (command == "[") {
+                    if (stack.length > 0) {
+                        if (stack.slice(-1)[0] <= 0) {
+                            code_pointer = while_loops[code_pointer];
+                        }
+                    }
+                }
+                else if (command == "]") {
+                    if (stack.length > 0) {
+                        if (stack.slice(-1)[0] > 0) {
+                            code_pointer = while_loops[code_pointer]-1;
+                        }
+                    }
+                }
 
             }
             else if (string_mode == true) {
@@ -306,10 +380,6 @@ document.getElementById('button').addEventListener("click", function() {
                     stack.push(command.codePointAt(0))
                 }
             }
-
-
-
-
             code_pointer++;
         }
         catch {
@@ -324,7 +394,7 @@ document.getElementById('button').addEventListener("click", function() {
         stack.reverse()
         var l = stack.length;
         for (let i = 0; i < l; i++) {
-            document.getElementById('stdout').value += String.fromCodePoint(stack.pop());
+            document.getElementById('stdout').value += String.fromCodePoint(popstack());
         }
         
         
