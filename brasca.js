@@ -31,7 +31,7 @@ document.getElementById('button').addEventListener("click", function() {
         }
     }
 
-
+    document.getElementById('stdout').value = "";
     while (code_pointer < code.length) {
         try {
             let command = code.charAt(code_pointer);
@@ -97,6 +97,21 @@ document.getElementById('button').addEventListener("click", function() {
                 }
 
                 //Strings/chars
+                else if (command == "`") {
+                    string_mode = true;
+                }
+                else if (command == "'") {
+                    stack.push(code.codePointAt(code_pointer+1));
+                    code_pointer++;
+                }
+
+
+
+
+
+
+
+
             }
             else if (string_mode == true) {
                 if (command == "`") {
@@ -122,9 +137,11 @@ document.getElementById('button').addEventListener("click", function() {
 
     if (already_printed == false) {
         stack.reverse()
-        stack.forEach(function(value) {
-            document.getElementById('stdout').value += value;
-        });
+        var l = stack.length;
+        for (let i = 0; i < l; i++) {
+            document.getElementById('stdout').value += String.fromCodePoint(stack.pop());
+        }
+        
         
     }
 
