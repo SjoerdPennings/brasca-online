@@ -1,7 +1,7 @@
 document.getElementById('button').addEventListener("click", function() {
     var stack = [];
-    var a = 0;
-    var b = 0;
+    var reg_a = 0;
+    var reg_b = 0;
 
     var string_mode = false;
     var already_printed = false;
@@ -14,13 +14,13 @@ document.getElementById('button').addEventListener("click", function() {
     
     //Get input and push to stack
     for (let i = 0; i < input.length; i++) {
-        stack.push(input.charAt(i));
+        stack.push(input.codePointAt(i));
     }
 
     //Populate the while loop object
     var temp = []
     for (let i = 0; i < code.length; i++) {
-        let j = code.charAt(i);
+        let j = code.codePointAt(i);
         if (j == "[") {
             temp.push(i);
         }
@@ -105,9 +105,194 @@ document.getElementById('button').addEventListener("click", function() {
                     code_pointer++;
                 }
 
+                //Math
+                else if (command == "+") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    stack.push(b+a);
+                }
+                else if (command == "-") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    stack.push(b-a);
+                }
+                else if (command == "*") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    stack.push(b*a);
+                }
+                else if (command == "/") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    stack.push(Math.floor(b/a));
+                }
+                else if (command == "%") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    stack.push(b%a);
+                }
+                else if (command == "^") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    stack.push(Math.pow(b,a));
+                }
+                else if (command == "s") {
+                    let a = stack.pop();
+                    stack.push(Math.floor(Math.sqrt(a)));
+                }
 
+                //Bitwise
+                else if (command == "~") {
+                    let a = stack.pop();
+                    stack.push(~a);
+                }
+                else if (command == "&") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    stack.push(b&a);
+                }
+                else if (command == "|") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    stack.push(b|a);
+                }
+                else if (command == "_") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    stack.push(b^a);
+                }
 
+                //Stack
+                else if (command == "a") {
+                    reg_a = stack.pop();
+                }
+                else if (command == "b") {
+                    reg_b = stack.pop();
+                }
+                else if (command == "A") {
+                    stack.push(reg_a);
+                    reg_a = 0;
+                }
+                else if (command == "B") {
+                    stack.push(reg_b);
+                    reg_b = 0;
+                }
+                else if (command == ",") {
+                    stack.reverse();
+                }
+                else if (command == ":") {
+                    let a = stack.pop();
+                    stack.push(a);
+                    stack.push(a);
+                }
+                else if (command == ";") {
+                    let a = stack.shift();
+                    stack.unshift(a);
+                    stack.unshift(a);
+                }
+                else if (command == "m") {
+                    let a = stack.pop();
+                    stack.unshift(a);
+                }
+                else if (command == "M") {
+                    let a = stack.shift();
+                    stack.push(a);
+                }
+                else if (command == "p") {
+                    let amount = stack.pop();
+                    for (const x of Array(amount).keys()) {
+                        let val = stack.pop();
+                        stack.unshift(val);
+                    }
+                }
+                else if (command == "P") {
+                    let amount = stack.pop();
+                    for (const x of Array(amount).keys()) {
+                        let val = stack.shift();
+                        stack.push(val);
+                    }
+                }
+                else if (command == "?") {
+                    stack.push(Math.floor(Math.random() * 128));
+                }
+                else if (command == "!") {
+                    stack.push(stack.length);
+                }
+                else if (command == "$") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    stack.push(a);
+                    stack.push(b);
+                }
+                else if (command == "R") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    let c = stack.pop();
+                    stack.push(a);
+                    stack.push(c);
+                    stack.push(b);
+                }
+                else if (command == "S") {
+                    let a = stack.pop();
+                    let b = stack.pop();
+                    stack.push("" + b + a);
+                }
+                else if (command == "g") {
+                    let temp = stack.join('');
+                    let amount = stack.length;
+                    for (const x of Array(amount).keys()) {
+                        stack.pop();
+                    }
+                    stack.push(temp);
+                }
+                else if (command == "i") {
+                    let amount = stack.length;
+                    for (const x of Array(amount).keys()) {
+                        if (stack[x] >= 48 && stack[x] <= 57) {
+                            stack[x] -= 48;
+                        }
+                    }
+                }
+                else if (command == "I") {
+                    let amount = stack.length;
+                    for (const x of Array(amount).keys()) {
+                        if (stack[x] >= 0 && stack[x] <= 9) {
+                            stack[x] += 48;
+                        }
+                    }
+                }
+                else if (command == "x") {
+                    stack.pop();
+                }
+                else if (command == "X") {
+                    stack.shift();
+                }
 
+                //I/O
+                else if (command == "o") {
+                    if (already_printed == false) {
+                        already_printed = true;
+                    }
+                    document.getElementById('stdout').value += String.fromCodePoint(stack.pop());
+                }
+                else if (command == "O") {
+                    if (already_printed == false) {
+                        already_printed = true;
+                    }
+                    document.getElementById('stdout').value += String.fromCodePoint(stack.shift());
+                }
+                else if (command == "n") {
+                    if (already_printed == false) {
+                        already_printed = true;
+                    }
+                    document.getElementById('stdout').value += stack.pop();
+                }
+                else if (command == "N") {
+                    if (already_printed == false) {
+                        already_printed = true;
+                    }
+                    document.getElementById('stdout').value += stack.shift();
+                }
 
 
 
