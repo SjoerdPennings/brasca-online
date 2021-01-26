@@ -1,0 +1,28 @@
+body {
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+textarea {
+    resize: none;
+    width: auto;
+}
+
+.center {
+    margin: auto;
+    width: 75%;
+    border: 3px solid grey;
+    padding: 10px;
+}
+
+#button {
+    width: 99%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+#stdout:disabled {
+    color: black;
+}

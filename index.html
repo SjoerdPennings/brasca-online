@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRASCA Online Interpreter</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="style.css" charset="utf-8">
+    <link rel="icon" href="data:;base64,=">
+
+</head>
+<body>
+    <div class="center">
+        <label for="code">Code: </label><br>
+        <textarea name="code" id="code" cols="120" rows="10"></textarea><br>
+
+        <label for="stdin">Input: </label><br>
+        <textarea name="stdin" id="stdin" cols="120" rows="10"></textarea><br>
+        <button id="button" class="submit">Run code!</button><br>
+
+        <label for="stdout">Output: </label><br>
+        <textarea name="stdout" id="stdout" cols="120" rows="10" readonly disabled></textarea><br>
+    </div>
+</body>
+<script src="brasca.js"></script>
+</html>
