@@ -1,3 +1,28 @@
+//Get code and input from query string, if there is any
+if (window.location.search != "") {
+    const urlParams = new URLSearchParams(window.location.search);
+    document.getElementById("code").value = urlParams.get('code');
+    document.getElementById("stdin").value = urlParams.get('stdin');
+}
+
+document.getElementById('savelink').addEventListener("click", function() {
+    //Construct string
+    var link = location.protocol + '//' + location.host + location.pathname + "?code=" + document.getElementById('code').value + "&stdin=" + document.getElementById('stdin').value;
+    
+    //Make temporary element for copying
+    var el = document.createElement('textarea');
+    el.value = link;
+    el.setAttribute('readonly', '');
+    el.style= {position: 'absolute', left: '-9999px'}
+    document.body.appendChild(el);
+
+    //Copy link and remove temporary element
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    alert('Link copied!\n' + link)
+});
+
 document.getElementById('button').addEventListener("click", function() {
     
     var stack = [];
@@ -7,6 +32,10 @@ document.getElementById('button').addEventListener("click", function() {
     var string_mode = false;
     var already_printed = false;
     var while_loops = {};
+
+    
+
+
 
     var code_pointer = 0;
     var code = document.getElementById('code').value

@@ -15,7 +15,16 @@ textarea {
 }
 
 #button {
-    width: 99%;
+    width: 49%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+#savelink {
+    width: 50%;
     margin-top: 5px;
     margin-bottom: 5px;
     padding-top: 5px;
