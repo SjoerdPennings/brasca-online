@@ -7,6 +7,10 @@ textarea {
     width: auto;
 }
 
+h1 {
+    text-align: center;
+}
+
 .center {
     margin: auto;
     width: 75%;
