@@ -7,10 +7,13 @@ if (window.location.search != "") {
 
 document.getElementById('savelink').addEventListener("click", function() {
     //Construct string
-    var link = location.protocol + '//' + location.host + location.pathname + "?code=" + document.getElementById('code').value + "&stdin=" + document.getElementById('stdin').value;
+    let escapedCode = encodeURIComponent(document.getElementById('code').value);
+    let escapedStdin = encodeURIComponent(document.getElementById('stdin').value);
+
+    let link = location.protocol + '//' + location.host + location.pathname + "?code=" + escapedCode + "&stdin=" + escapedStdin;
     
     //Make temporary element for copying
-    var el = document.createElement('textarea');
+    let el = document.createElement('textarea');
     el.value = link;
     el.setAttribute('readonly', '');
     el.style= {position: 'absolute', left: '-9999px'}
