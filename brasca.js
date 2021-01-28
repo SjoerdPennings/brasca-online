@@ -149,6 +149,13 @@ document.getElementById('button').addEventListener("click", function() {
                 else if (command == "K") {
                     stack.push(1000)
                 }
+                else if (command == "{") {
+                    stack.push(parseInt(popstack()-1));
+                }
+                else if (command == "}") {
+                    stack.push(parseInt(popstack()+1));
+                }
+
 
                 //Strings/chars
                 else if (command == "`") {
@@ -267,7 +274,7 @@ document.getElementById('button').addEventListener("click", function() {
                     }
                 }
                 else if (command == "?") {
-                    stack.push(Math.floor(Math.random() * 128));
+                    stack.push(Math.floor(Math.random() * (popstack() + 1) ) + 0);
                 }
                 else if (command == "!") {
                     stack.push(stack.length);
