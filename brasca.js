@@ -155,6 +155,13 @@ document.getElementById('button').addEventListener("click", function() {
                 else if (command == "}") {
                     stack.push(parseInt(popstack()+1));
                 }
+                else if (command == 'r') {
+                    let a = popstack();
+                    let b = popstack();
+                    for (var i = b; i <= a; i++) {
+                        stack.push(i);
+                    }
+                }
 
 
                 //Strings/chars
@@ -306,6 +313,25 @@ document.getElementById('button').addEventListener("click", function() {
                     }
                     stack.push(temp);
                 }
+                else if (command == "u") {
+                    let a = popstack();
+                    a = a.split('').map(Number);
+                    a.forEach(digit => {
+                        stack.push(digit);
+                    });
+                }
+                else if (command == "U") {
+                    let temp = stack.join('');
+                    let amount = stack.length;
+                    for (const x of Array(amount).keys()) {
+                        popstack();
+                    }
+                    temp = temp.split('').map(Number);
+                    temp.forEach(digit => {
+                        stack.push(digit);
+                    });
+                    
+                }
                 else if (command == "i") {
                     let amount = stack.length;
                     for (const x of Array(amount).keys()) {
@@ -380,6 +406,17 @@ document.getElementById('button').addEventListener("click", function() {
                     let a = popstack();
                     let b = popstack();
                     if (b==a) {
+                        stack.push(1);
+                    }
+                    else {
+                        stack.push(0);
+                    }
+                }
+                else if (command == "Y") {
+                    let a = popstack();
+                    let b = popstack();
+                    let c = popstack();
+                    if (b <= c <= a) {
                         stack.push(1);
                     }
                     else {

@@ -1,4 +1,4 @@
-# BRASCA Online Interpreter v0.3
+# BRASCA Online Interpreter v0.4
 
 An online interpreter for [SjoerdPennings/BRASCA](https://github.com/SjoerdPennings/BRASCA)
 
