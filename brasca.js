@@ -52,15 +52,25 @@ document.getElementById('button').addEventListener("click", function() {
 
     //Populate the while loop object
     var temp = []
+    var temp_strmode = false;
     for (let i = 0; i < code.length; i++) {
         let j = code[i];
-        if (j == "[") {
+        if (j == "[" && temp_strmode == false) {
             temp.push(i);
         }
-        else if (j == "]") {
+        else if (j == "]" && temp_strmode == false) {
             let start = temp.pop()
             while_loops[start] = i;
             while_loops[i] = start;
+        }
+        else if (j == "'") {
+            i++;
+        }
+        else if (j == "`" && temp_strmode == false) {
+            temp_strmode = true
+        }
+        else if (j == "`" && temp_strmode == true) {
+            temp_strmode = false
         }
     }
     
