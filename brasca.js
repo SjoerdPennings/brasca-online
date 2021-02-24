@@ -324,7 +324,7 @@ document.getElementById('button').addEventListener("click", function() {
                     stack.push(temp);
                 }
                 else if (command == "u") {
-                    let a = popstack();
+                    let a = popstack().toString();
                     a = a.split('').map(Number);
                     a.forEach(digit => {
                         stack.push(digit);
