@@ -35,7 +35,7 @@ document.getElementById('button').addEventListener("click", function() {
     var string_mode = false;
     var already_printed = false;
     var while_loops = {};
-
+    var implicit_num = false;
     
 
 
@@ -172,6 +172,7 @@ document.getElementById('button').addEventListener("click", function() {
                         stack.push(i);
                     }
                 }
+
 
 
                 //Strings/chars
@@ -456,6 +457,9 @@ document.getElementById('button').addEventListener("click", function() {
                         }
                     }
                 }
+                else if (command == "C") {
+                    implicit_num = true;
+                }
 
             }
             else if (string_mode == true) {
@@ -480,7 +484,11 @@ document.getElementById('button').addEventListener("click", function() {
         stack.reverse()
         var l = stack.length;
         for (let i = 0; i < l; i++) {
-            document.getElementById('stdout').value += String.fromCodePoint(popstack());
+            if (implicit_num == false) {
+                document.getElementById('stdout').value += String.fromCodePoint(popstack());
+            } else {
+                document.getElementById('stdout').value += popstack();
+            }
         }
         
         
