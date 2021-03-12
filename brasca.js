@@ -36,7 +36,7 @@ document.getElementById('button').addEventListener("click", function() {
     var already_printed = false;
     var while_loops = {};
     var implicit_num = false;
-    
+    var implicit_top = false;
 
 
 
@@ -460,6 +460,9 @@ document.getElementById('button').addEventListener("click", function() {
                 else if (command == "C") {
                     implicit_num = true;
                 }
+                else if (command == "T") {
+                    implicit_top = true;
+                }
 
             }
             else if (string_mode == true) {
@@ -481,15 +484,25 @@ document.getElementById('button').addEventListener("click", function() {
 
 
     if (already_printed == false) {
-        stack.reverse()
-        var l = stack.length;
-        for (let i = 0; i < l; i++) {
+        if (implicit_top == false) {
+            stack.reverse()
+            var l = stack.length;
+            for (let i = 0; i < l; i++) {
+                if (implicit_num == false) {
+                    document.getElementById('stdout').value += String.fromCodePoint(popstack());
+                } else {
+                    document.getElementById('stdout').value += popstack();
+                }
+            }
+        }
+        else if (implicit_top == true) {
             if (implicit_num == false) {
                 document.getElementById('stdout').value += String.fromCodePoint(popstack());
             } else {
                 document.getElementById('stdout').value += popstack();
             }
         }
+        
         
         
     }
